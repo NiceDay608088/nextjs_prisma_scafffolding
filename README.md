@@ -1,0 +1,1 @@
+# nextjs_prisma_scafffolding
