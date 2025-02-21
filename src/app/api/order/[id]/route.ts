@@ -1,6 +1,6 @@
 import { editUser } from "@/services/user-service";
 import { getUserIdFromReq } from "@/utils/server-cookie-util";
-import { resError_400, resError_500 } from "@/utils/server-res-util";
+import { resError_400, resError_500 } from "@/utils/server-response-error-util";
 import { NextResponse } from "next/server";
 
 export async function PUT(

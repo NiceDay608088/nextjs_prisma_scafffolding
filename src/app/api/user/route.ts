@@ -1,5 +1,5 @@
 import { createUser } from "@/services/user-service";
-import { resError_500 } from "@/utils/server-res-util";
+import { resError_500 } from "@/utils/server-response-error-util";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

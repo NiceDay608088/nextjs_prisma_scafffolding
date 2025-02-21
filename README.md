@@ -2,18 +2,22 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 
 # Components
 
-| Component           | Version               | Description |
-| ------------------- | --------------------- | ----------- |
-| Next.js             | 15                    |             |
-| React               | 19                    |             |
-| Typescript          |                       |             |
-| Zod                 |                       |             |
-| React-hook-form     |                       |             |
-| RTK (Redux Toolkit) |                       |             |
-| JWT                 |                       |             |
-| Shadcn              | shadcn@2.4.0-canary.6 |             |
-| Tailwind CSS        |                       |             |
-| DndKit              |                       |             |
+| Component           | Version               |
+| ------------------- | --------------------- |
+| Next.js             | 15                    |
+| Next.js middleware  |                       |
+| React               | 19                    |
+| Typescript          |                       |
+| Zod                 |                       |
+| React-hook-form     |                       |
+| RTK (Redux Toolkit) |                       |
+| JWT                 |                       |
+| Shadcn              | shadcn@2.4.0-canary.6 |
+| Tailwind CSS        |                       |
+| DndKit              |                       |
+| Prisma              |                       |
+| Supabase            |                       |
+|                     |                       |
 
 # Features
 
