@@ -4,19 +4,19 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 
 | Component           | Version               |
 | ------------------- | --------------------- |
+| DndKit              |                       |
+| JWT                 |                       |
 | Next.js             | 15                    |
 | Next.js middleware  |                       |
+| Prisma              |                       |
 | React               | 19                    |
-| Typescript          |                       |
-| Zod                 |                       |
 | React-hook-form     |                       |
 | RTK (Redux Toolkit) |                       |
-| JWT                 |                       |
 | Shadcn              | shadcn@2.4.0-canary.6 |
-| Tailwind CSS        |                       |
-| DndKit              |                       |
-| Prisma              |                       |
 | Supabase            |                       |
+| Tailwind CSS        |                       |
+| Typescript          |                       |
+| Zod                 |                       |
 |                     |                       |
 
 # Features
@@ -41,6 +41,10 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 ## Authentication & Middleware
 
 Middleware for authentication validation using JWT, configured via `.env` files
+
+## Http Request Encapsulation
+
+Centralized HTTP API requests using Fetch API with error handling and reusable methods for GET, POST, PUT, and DELETE.
 
 # other
 
