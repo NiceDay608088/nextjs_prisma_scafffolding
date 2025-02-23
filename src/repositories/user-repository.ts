@@ -1,10 +1,10 @@
 import { RECORD_PER_PAGE } from "@/utils/constants";
 import { encrypt } from "@/utils/encrypt-util";
-import prisma from "@/utils/prisma-util";
+import prisma from "@/lib/prisma";
 
 export const createUserRepo = async (request: UserCreateRequest) => {
   const user = await prisma.user.create({ data: request });
-  return user.id;
+  return user;
 };
 
 export const editUserRepo = async (request: UserUpdateRequest) => {

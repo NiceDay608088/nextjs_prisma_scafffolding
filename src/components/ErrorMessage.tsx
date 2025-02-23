@@ -6,7 +6,7 @@ interface HookErrorMessage {
 }
 
 interface ErrorMessageProp {
-  message: string;
+  message?: string;
 }
 
 export const HookErrorMessage = ({ error }: HookErrorMessage) => {

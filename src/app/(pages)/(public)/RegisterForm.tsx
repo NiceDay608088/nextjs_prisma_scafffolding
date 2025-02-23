@@ -17,7 +17,7 @@ const registerSchema = z
     confirmPassword: z.string().nonempty("Confirm Password is required."),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords must match.",
+    message: "Confirm password doesn't match Password.",
     path: ["confirmPassword"],
   });
 

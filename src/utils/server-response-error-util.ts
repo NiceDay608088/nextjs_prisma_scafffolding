@@ -1,23 +1,22 @@
 import { NextResponse } from "next/server";
-import { printErrorLog } from "./error-util";
 
-export const resError_400 = (e: any) => {
-  printErrorLog(e);
+export const resError_400 = (message: string) => {
+  console.error(message);
   return NextResponse.json(
     {
       error: "Bad Request",
-      message: e.message,
+      message,
     },
     { status: 400 }
   );
 };
 
-export const resError_500 = (e: any) => {
-  printErrorLog(e);
+export const resError_500 = (message: string) => {
+  console.error(message);
   return NextResponse.json(
     {
       error: "Internal Server Error",
-      message: e.message,
+      message,
     },
     { status: 500 }
   );

@@ -6,9 +6,14 @@ import {
   getUserByNameRepo,
   listUsersRepo,
 } from "@/repositories/user-repository";
+import { encrypt } from "@/utils/encrypt-util";
 
 export const createUser = async (request: UserCreateRequest) => {
-  return await createUserRepo(request);
+  const user = await createUserRepo({
+    username: request.username,
+    password: await encrypt(request.password),
+  });
+  return user;
 };
 
 export const editUser = async (request: UserUpdateRequest) => {

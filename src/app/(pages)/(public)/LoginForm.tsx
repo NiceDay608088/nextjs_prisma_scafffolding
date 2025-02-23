@@ -6,8 +6,9 @@ import { z } from "zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { postRequest } from "@/utils/request-util";
 import { ErrorMessage, HookErrorMessage } from "@/components/ErrorMessage";
+import { GET_USER_BY_USERNAME_PASSWORD } from "@/utils/graphql-client-querys";
+import apolloClient from "@/lib/apolloClient";
 
 const loginsSchema = z.object({
   username: z.string().nonempty("Username is required."),
@@ -17,7 +18,7 @@ const loginsSchema = z.object({
 type LoginFormType = z.infer<typeof loginsSchema>;
 
 const LoginForm = () => {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [error, setError] = useState("");
   const {
     register,
     handleSubmit,
@@ -31,7 +32,16 @@ const LoginForm = () => {
   });
 
   async function onSubmit(values: LoginFormType) {
-    const res = await postRequest(`/users/login`, { ...values });
+    try {
+      const response = await apolloClient.query({
+        query: GET_USER_BY_USERNAME_PASSWORD,
+        variables: { ...values },
+      });
+      console.log(".....", response);
+      console.log(".....", response.data.getUserByUsernamePassword);
+    } catch (error) {
+      console.log(".....", error);
+    }
   }
 
   return (
@@ -49,7 +59,7 @@ const LoginForm = () => {
       <HookErrorMessage error={errors.password} />
 
       <Button>Login</Button>
-      <ErrorMessage message={errorMessage} />
+      <ErrorMessage message={error} />
     </form>
   );
 };

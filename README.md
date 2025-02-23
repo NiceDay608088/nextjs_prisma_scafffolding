@@ -2,22 +2,24 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 
 # Components
 
-| Component           | Version               |
-| ------------------- | --------------------- |
-| DndKit              |                       |
-| JWT                 |                       |
-| Next.js             | 15                    |
-| Next.js middleware  |                       |
-| Prisma              |                       |
-| React               | 19                    |
-| React-hook-form     |                       |
-| RTK (Redux Toolkit) |                       |
-| Shadcn              | shadcn@2.4.0-canary.6 |
-| Supabase            |                       |
-| Tailwind CSS        |                       |
-| Typescript          |                       |
-| Zod                 |                       |
-|                     |                       |
+| Component              | Version               |
+| ---------------------- | --------------------- |
+| Apollo Client & Server |                       |
+| DndKit                 |                       |
+| GraphQL                |                       |
+| JWT                    |                       |
+| Next.js                | 15                    |
+| Next.js middleware     |                       |
+| Prisma                 |                       |
+| React                  | 19                    |
+| React-hook-form        |                       |
+| RTK (Redux Toolkit)    |                       |
+| Shadcn                 | shadcn@2.4.0-canary.6 |
+| Supabase               |                       |
+| Tailwind CSS           |                       |
+| Typescript             |                       |
+| Zod                    |                       |
+|                        |                       |
 
 # Features
 
@@ -29,8 +31,7 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 
 ## Next.js GraphQL API
 
-- Examples demonstrating HTTP methods: POST and GET
-- Examples for handling file uploads
+- Examples showcasing HTTP methods: POST, typically used for both mutation and query requests with a JSON payload.
 
 ## Prisma Integration
 

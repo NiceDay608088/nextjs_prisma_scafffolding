@@ -1,1 +1,1 @@
-import prisma from "@/utils/prisma-util";
+import prisma from "@/lib/prisma";
