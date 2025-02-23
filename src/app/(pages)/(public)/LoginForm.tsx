@@ -7,8 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ErrorMessage, HookErrorMessage } from "@/components/ErrorMessage";
-import { GET_USER_BY_USERNAME_PASSWORD } from "@/utils/graphql-client-querys";
-import apolloClient from "@/lib/apolloClient";
+import { postRequest } from "@/utils/request-util";
 
 const loginsSchema = z.object({
   username: z.string().nonempty("Username is required."),
@@ -33,14 +32,11 @@ const LoginForm = () => {
 
   async function onSubmit(values: LoginFormType) {
     try {
-      const response = await apolloClient.query({
-        query: GET_USER_BY_USERNAME_PASSWORD,
-        variables: { ...values },
-      });
-      console.log(".....", response);
-      console.log(".....", response.data.getUserByUsernamePassword);
-    } catch (error) {
-      console.log(".....", error);
+      const data = await postRequest("/user/login", { ...values });
+      console.log(".....", data);
+    } catch (err: any) {
+      setError(err.message);
+      console.log(".....", err);
     }
   }
 

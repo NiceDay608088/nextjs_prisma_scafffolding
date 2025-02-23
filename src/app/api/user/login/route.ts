@@ -15,22 +15,22 @@ export async function POST(req: Request) {
 
   try {
     const user = await getUserByName(username);
-
+    console.log("111");
     if (!user) {
       return resError_400("User doesn't exist.");
     }
-
+    console.log("222");
     if (!(await comparePassword(password, user.password))) {
       return resError_400("Password is wrong.");
     }
-
+    console.log("333");
     const { authCookie, userDataCookie } = generateServerCookies(
       signToken(user.id.toString()),
       null,
       user.username
     );
-
-    const response = NextResponse.json({});
+    console.log("444");
+    const response = NextResponse.json({ id: user.id });
     response.headers.append("Set-Cookie", authCookie);
     response.headers.append("Set-Cookie", userDataCookie);
     return response;

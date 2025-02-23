@@ -1,3 +1,5 @@
+import { createUser } from "@/services/user-service";
+
 export const userResolvers = {
   Query: {
     getUserByUsernamePassword: (
@@ -9,12 +11,12 @@ export const userResolvers = {
     },
   },
   Mutation: {
-    createUser: (
+    createUser: async (
       _: any,
       { username, password }: { username: string; password: string }
     ) => {
-      console.log("createUser", { username, password });
-      return { username: "prod", id: "2" };
+      const user = await createUser({ username, password });
+      return { username: user.username, id: user.id };
     },
   },
 };

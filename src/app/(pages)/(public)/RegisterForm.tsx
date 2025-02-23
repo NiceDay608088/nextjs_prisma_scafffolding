@@ -8,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage, HookErrorMessage } from "@/components/ErrorMessage";
 import { Button } from "@/components/ui/button";
-import { postRequest } from "@/utils/request-util";
+import apolloClient from "@/lib/apolloClient";
+import { CREATE_USER } from "@/utils/graphql-client-querys";
 
 const registerSchema = z
   .object({
@@ -24,7 +25,7 @@ const registerSchema = z
 type RegisterFormType = z.infer<typeof registerSchema>;
 
 const RegisterForm = () => {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const {
     register,
@@ -40,12 +41,17 @@ const RegisterForm = () => {
   });
 
   async function onSubmit(values: RegisterFormType) {
+    const { confirmPassword, ...mutationVariables } = values;
+    console.log(mutationVariables);
     try {
-      const data = await postRequest("/users", { ...values });
-      console.log("Success:", data);
-    } catch (err: any) {
-      console.log("Error:", err);
-      setErrorMessage(err.message || "An error occurred");
+      const response: any = await apolloClient.mutate({
+        mutation: CREATE_USER,
+        variables: { ...mutationVariables },
+      });
+      console.log(".....", response.data.createUser);
+    } catch (error: any) {
+      setError(error.message);
+      console.log(".....", error);
     }
   }
 
@@ -74,7 +80,7 @@ const RegisterForm = () => {
       <HookErrorMessage error={errors.confirmPassword} />
 
       <Button>Register</Button>
-      <ErrorMessage message={errorMessage} />
+      <ErrorMessage message={error} />
     </form>
   );
 };
