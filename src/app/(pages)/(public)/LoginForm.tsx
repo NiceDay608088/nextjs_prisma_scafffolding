@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ErrorMessage, HookErrorMessage } from "@/components/ErrorMessage";
 import { postRequest } from "@/utils/request-util";
+import { showToast } from "@/components/Toast";
+import { useRouter } from "next/navigation";
 
 const loginsSchema = z.object({
   username: z.string().nonempty("Username is required."),
@@ -17,6 +19,7 @@ const loginsSchema = z.object({
 type LoginFormType = z.infer<typeof loginsSchema>;
 
 const LoginForm = () => {
+  const router = useRouter();
   const [error, setError] = useState("");
   const {
     register,
@@ -34,6 +37,8 @@ const LoginForm = () => {
     try {
       const data = await postRequest("/user/login", { ...values });
       console.log(".....", data);
+      showToast({ message: "Successful", type: "success" });
+      router.push("/user");
     } catch (err: any) {
       setError(err.message);
       console.log(".....", err);
