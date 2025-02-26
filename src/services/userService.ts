@@ -5,7 +5,7 @@ import {
   getUserByIdRepo,
   getUserByNameRepo,
   listUsersRepo,
-} from "@/repositories/user-repository";
+} from "@/repositories/userRepository";
 import { encrypt } from "@/utils/encrypt-util";
 
 export const createUser = async (request: UserCreateRequest) => {

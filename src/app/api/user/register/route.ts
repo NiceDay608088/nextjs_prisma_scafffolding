@@ -1,5 +1,4 @@
-// app/api/register/route.ts
-import { createUser } from "@/services/user-service";
+import { createUser } from "@/services/userService";
 import { resError_400, resError_500 } from "@/utils/server-response-error-util";
 import { NextResponse } from "next/server";
 
@@ -12,8 +11,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    await createUser({ username, password });
-    return NextResponse.json({});
+    const user = await createUser({ username, password });
+    return NextResponse.json({ id: user.id });
   } catch (error: any) {
     return resError_500("Failed to fetch user");
   }

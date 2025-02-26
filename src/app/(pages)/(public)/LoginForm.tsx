@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ErrorMessage, HookErrorMessage } from "@/components/ErrorMessage";
 import { postRequest } from "@/utils/request-util";
-import { showToast } from "@/components/Toast";
 import { useRouter } from "next/navigation";
 
 const loginsSchema = z.object({
@@ -35,13 +34,11 @@ const LoginForm = () => {
 
   async function onSubmit(values: LoginFormType) {
     try {
-      const data = await postRequest("/user/login", { ...values });
-      console.log(".....", data);
-      showToast({ message: "Successful", type: "success" });
-      router.push("/user");
+      await postRequest("/user/login", { ...values });
+      router.push("/home");
     } catch (err: any) {
+      // console.log(".....", err);
       setError(err.message);
-      console.log(".....", err);
     }
   }
 

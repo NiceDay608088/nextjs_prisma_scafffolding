@@ -1,4 +1,4 @@
-import { getUserByName } from "@/services/user-service";
+import { getUserByName } from "@/services/userService";
 import { comparePassword } from "@/utils/encrypt-util";
 import { signToken } from "@/utils/jwt-util";
 import { generateServerCookies } from "@/utils/server-cookie-util";

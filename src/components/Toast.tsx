@@ -7,15 +7,15 @@ interface ToastProps {
   duration?: number;
 }
 
-export const showToast = ({ message, type, duration = 8800 }: ToastProps) => {
+export const showToast = ({ message, type, duration = 800 }: ToastProps) => {
   return toast(
     <div
-      className={`flex items-center gap-5 tex-xl ${
-        type === "success" ? "text-green-500" : "text-red-500"
+      className={`flex items-center gap-4 text-lg ${
+        type === "success" ? "text-green-600" : "text-red-500"
       }`}
     >
       <span>
-        {type === "success" ? <Check size={25} /> : <AlertTriangle />}
+        {type === "success" ? <Check size={25} /> : <AlertTriangle size={25} />}
       </span>
       <span>{message}</span>
     </div>,

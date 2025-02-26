@@ -1,12 +1,12 @@
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { ApolloServer } from "@apollo/server";
 import { NextRequest } from "next/server";
-import { userTypeDefs } from "./typeDefs/userTypeDefs";
-import { userResolvers } from "./resolvers/userResolvers";
+import { orderTypeDefs } from "@/typeDefs/orderTypeDefs";
+import { orderResolvers } from "@/resolvers/orderResolvers";
 
 const server = new ApolloServer({
-  typeDefs: [userTypeDefs],
-  resolvers: [userResolvers],
+  typeDefs: [orderTypeDefs],
+  resolvers: [orderResolvers],
 });
 
 const handler = startServerAndCreateNextHandler<NextRequest>(server, {

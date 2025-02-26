@@ -17,7 +17,7 @@ model User {
   id          Int          @map("id")          @db.Integer      @id @default(autoincrement())  
   username    String       @map("username")    @db.VarChar
   password    String       @map("password")    @db.VarChar
-  cDate       DateTime     @map("cdate")       @db.Timestamp()  @default(now())
+  cDate       DateTime     @map("cdate")       @db.Timestamp    @default(now())
   isDeleted   Boolean      @map("is_deleted")  @db.Boolean      @default(false)
   @@map("t_scafford_users")
 }
@@ -25,9 +25,12 @@ model User {
 model Order {
   id          Int          @map("id")          @db.Integer      @id @default(autoincrement())  
   name        String       @map("name")        @db.VarChar
-  amount      Int          @map("amount")      @db.Integer
+  amount      Float        @map("amount")      @db.DoublePrecision
   userId      Int          @map("user_id")     @db.Integer
-  cDate       DateTime     @map("cdate")       @db.Timestamp()  @default(now())
+  category    String       @map("category")    @db.VarChar
+  labels      String[]     @map("labels")      @db.Text
+  metadata    Json?        @map("metadata")    @db.JsonB
+  cDate       DateTime     @map("cdate")       @db.Timestamp    @default(now())
   isDeleted   Boolean      @map("is_deleted")  @db.Boolean      @default(false)
-  @@map("t_scafford_books")
+  @@map("t_scafford_orders")
 }

@@ -8,8 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ErrorMessage, HookErrorMessage } from "@/components/ErrorMessage";
 import { Button } from "@/components/ui/button";
-import apolloClient from "@/lib/apolloClient";
-import { CREATE_USER } from "@/utils/graphql-client-querys";
+import { showToast } from "@/components/Toast";
+import { postRequest } from "@/utils/request-util";
 
 const registerSchema = z
   .object({
@@ -30,6 +30,7 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RegisterFormType>({
     resolver: zodResolver(registerSchema),
@@ -44,14 +45,18 @@ const RegisterForm = () => {
     const { confirmPassword, ...mutationVariables } = values;
     console.log(mutationVariables);
     try {
-      const response: any = await apolloClient.mutate({
-        mutation: CREATE_USER,
-        variables: { ...mutationVariables },
+      const response: any = await postRequest("/user/register", {
+        ...mutationVariables,
       });
-      console.log(".....", response.data.createUser);
+      showToast({ message: "Success", type: "success" });
+      console.log(".....", response.id);
+      setError("");
     } catch (error: any) {
+      showToast({ message: "Error", type: "error" });
       setError(error.message);
       console.log(".....", error);
+    } finally {
+      reset();
     }
   }
 

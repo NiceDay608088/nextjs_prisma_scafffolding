@@ -28,10 +28,12 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 - Examples demonstrating HTTP methods: POST, GET, PUT, and DELETE
 - Examples for submitting forms and posting JSON data
 - Examples for handling file uploads
+- User-related features follow a RESTful API approach
 
 ## Next.js GraphQL API
 
 - Examples showcasing HTTP methods: POST, typically used for both mutation and query requests with a JSON payload.
+- Order-related functionality is built using GraphQL
 
 ## Prisma Integration
 
@@ -41,7 +43,7 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 
 ## Authentication & Middleware
 
-Middleware for authentication validation using JWT, configured via `.env` files
+Middleware for authentication validation using JWT is implemented for both GraphQL and RESTful requests, with configuration handled through .env files.
 
 ## Http Request Encapsulation
 

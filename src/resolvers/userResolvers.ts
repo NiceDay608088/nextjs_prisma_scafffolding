@@ -1,4 +1,4 @@
-import { createUser } from "@/services/user-service";
+import { createUser } from "@/services/userService";
 
 export const userResolvers = {
   Query: {

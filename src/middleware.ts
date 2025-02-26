@@ -1,36 +1,56 @@
 import { NextRequest, NextResponse } from "next/server";
-import { TOKEN_KEY, X_USER_ID } from "./utils/constants";
+import { GRAPHQL_ENDPOINT, TOKEN_KEY, X_USER_ID } from "./utils/constants";
 import { verifyToken } from "./utils/jwt-util";
 
-const urlsToSkip = [
+const restfulPathsToSkip = [
+  "/api/user",
   "/api/user/login",
   "/api/user/register",
   "/api/user/logout",
 ];
 
-const urlsMapToSkip = [{ method: "post", url: "/api/users" }];
+const graphqlOperationsToSkip = ["CreateUser", ""];
 
-const isSkip = (request: NextRequest) => {
-  const url = new URL(request.url);
-  console.log({
-    pathname: url.pathname.toLowerCase(),
-    method: request.method.toLowerCase(),
-  });
-  let r = urlsToSkip.some((urlToSkip) => url.pathname === urlToSkip);
-  if (r) {
-    return true;
+const isSkipRestfulRequest = (request: NextRequest) => {
+  if (request.nextUrl.pathname !== GRAPHQL_ENDPOINT) {
+    return restfulPathsToSkip.some((path) => request.nextUrl.pathname === path);
+  }
+  return false;
+};
+
+const isSkipGraphqlRequest = (request: NextRequest, body: any) => {
+  if (request.nextUrl.pathname === GRAPHQL_ENDPOINT) {
+    return graphqlOperationsToSkip.some(
+      (operation) => operation === body.operationName
+    );
+  }
+  return false;
+};
+
+const isSkipSecurityCheck = () => {
+  if (!process.env.IS_ENABLE_API_SECURITY) {
+    return false;
   }
 
-  r = urlsMapToSkip.some(
-    (urlToSkip) =>
-      urlToSkip.method.toLowerCase() === request.method.toLowerCase() &&
-      url.pathname.toLowerCase() === urlToSkip.url.toLowerCase()
-  );
-  return r;
+  return process.env.IS_ENABLE_API_SECURITY.toLowerCase() === "false";
 };
 
 export async function middleware(request: NextRequest) {
-  if (isSkip(request)) {
+  if (isSkipSecurityCheck()) {
+    return NextResponse.next();
+  }
+
+  const contentLength = request.headers.get("content-length");
+  const hasBody = contentLength && parseInt(contentLength) > 0;
+  const body = hasBody ? await request.json() : "";
+
+  console.log({
+    pathname: request.nextUrl.pathname.toLowerCase(),
+    method: request.method.toLowerCase(),
+    body,
+  });
+
+  if (isSkipGraphqlRequest(request, body) || isSkipRestfulRequest(request)) {
     return NextResponse.next();
   }
 

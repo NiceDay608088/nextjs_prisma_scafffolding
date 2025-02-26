@@ -6,7 +6,7 @@ import LoginForm from "./LoginForm";
 
 const HomePage = () => {
   return (
-    <div className="h-screen flex mt-32 justify-center">
+    <div className="h-screen flex pt-32 justify-center">
       <Tabs defaultValue="tab_login" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="tab_login">Login</TabsTrigger>

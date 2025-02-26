@@ -59,6 +59,11 @@
 }
 
 @layer base {
+  html,
+  body,
+  #__next {
+    height: 100%; /* Ensure full height for all root elements */
+  }
   * {
     @apply border-border outline-ring/50;
   }
