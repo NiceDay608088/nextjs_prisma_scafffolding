@@ -66,7 +66,7 @@ async function fetchRequest(
   path: string,
   params?: Record<string, any>
 ): Promise<any> {
-  const url = getRestApiUrl(path);
+  let url = getRestApiUrl(path);
 
   const options: RequestInit = {
     method,
@@ -76,7 +76,11 @@ async function fetchRequest(
     credentials: "include",
   };
 
-  if (params) {
+  if (method === "GET" && params) {
+    let queryString = new URLSearchParams(params).toString();
+    queryString = queryString ? `?${queryString}` : "";
+    url = `${url}${queryString}`;
+  } else if (params) {
     options.body = JSON.stringify(params);
   }
 

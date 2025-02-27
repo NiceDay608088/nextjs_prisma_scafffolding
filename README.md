@@ -5,9 +5,11 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 | Component              | Version               |
 | ---------------------- | --------------------- |
 | Apollo Client & Server |                       |
+| date-fns               |                       |
 | DndKit                 |                       |
 | GraphQL                |                       |
 | JWT                    |                       |
+| lodash                 |                       |
 | Next.js                | 15                    |
 | Next.js middleware     |                       |
 | Prisma                 |                       |
@@ -52,3 +54,7 @@ Centralized HTTP API requests using Fetch API with error handling and reusable m
 # other
 
 Rename `.eenv` to `.env` to reference the environment file.
+
+# References
+
+- https://github.com/sersavan/shadcn-multi-select-component

@@ -1,12 +1,13 @@
 import {
   createUserRepo,
-  deleteUserRepo,
+  deleteUsersRepo,
   editUserRepo,
   getUserByIdRepo,
   getUserByNameRepo,
   listUsersRepo,
 } from "@/repositories/userRepository";
 import { encrypt } from "@/utils/encrypt-util";
+import _ from "lodash";
 
 export const createUser = async (request: UserCreateRequest) => {
   const user = await createUserRepo({
@@ -25,12 +26,16 @@ export const editUser = async (request: UserUpdateRequest) => {
   return await editUserRepo(request);
 };
 
-export const deleteUser = async (id: string) => {
-  return await deleteUserRepo(id);
+export const deleteUsers = async (request: UserDeleteRequest) => {
+  return await deleteUsersRepo(request);
 };
 
-export const listUsers = async (currentPage: number) => {
-  return await listUsersRepo(currentPage);
+export const listUsers = async (userFilterRequest: UserFilterRequest) => {
+  const { users, ...restFields } = await listUsersRepo(userFilterRequest);
+  const sanitizedUsers = users.map((user) =>
+    _.omit(user, ["password", "isDeleted"])
+  );
+  return { users: sanitizedUsers, ...restFields };
 };
 
 export const getUserByName = async (username: string) => {

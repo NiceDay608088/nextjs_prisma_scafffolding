@@ -20,24 +20,34 @@ export const editUserRepo = async (request: UserUpdateRequest) => {
   return updatedUser;
 };
 
-export const deleteUserRepo = async (id: string) => {
-  const updatedUser = await prisma.user.update({
+export const deleteUsersRepo = async (request: UserDeleteRequest) => {
+  const deletedUsers = await prisma.user.updateMany({
     where: {
-      id: Number(id),
+      id: { in: request.ids },
     },
     data: {
       isDeleted: true,
     },
   });
-  return updatedUser;
+  return deletedUsers;
 };
 
-export const listUsersRepo = async (currentPage: number) => {
+export const listUsersRepo = async ({
+  username,
+  currentPage,
+}: UserFilterRequest) => {
   const skip = (currentPage - 1) * RECORD_PER_PAGE;
 
-  const whereConditions = {
+  const whereConditions: any = {
     isDeleted: false,
   };
+
+  if (username && username.trim() !== "") {
+    whereConditions.username = {
+      contains: username.trim(),
+      mode: "insensitive",
+    };
+  }
 
   const [users, totalCount] = await prisma.$transaction([
     prisma.user.findMany({
