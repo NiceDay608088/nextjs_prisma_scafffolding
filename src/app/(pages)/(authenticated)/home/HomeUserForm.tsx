@@ -12,17 +12,25 @@ import {
 import { User2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import HomeUserListItem from "./HomeUserListItem";
-import { deleteRequest, getRequest, postRequest } from "@/utils/request-util";
+import { deleteRequest, getRequest } from "@/utils/request-util";
+import PagingContainer from "@/components/PagingContainer";
 
 interface HomeUserFilterType {
   username: string;
   currentPage: number;
 }
 
-interface HomeUserDataType {
+interface HomeUserItemType {
   id: number;
   username: string;
   cDate: Date;
+}
+
+interface HomeUserPagingDataType {
+  pages: number;
+  currentPage: number;
+  totalCount: number;
+  users: HomeUserItemType[];
 }
 
 const HomeUserForm = () => {
@@ -30,16 +38,21 @@ const HomeUserForm = () => {
     username: "",
     currentPage: 1,
   });
-  const [data, setData] = useState<HomeUserDataType[]>([]);
+  const [pagingData, setPagingData] = useState<HomeUserPagingDataType>({
+    pages: 0,
+    currentPage: 1,
+    totalCount: 0,
+    users: [],
+  });
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
-  const filterUsers = async () => {
-    const pagingUsers = await getRequest("/user", { ...filter });
-    setData(pagingUsers.users);
+  const filterUsers = async (currentPage: number) => {
+    const pagingUsers = await getRequest("/user", { ...filter, currentPage });
+    setPagingData(pagingUsers);
   };
 
   useEffect(() => {
-    filterUsers();
+    filterUsers(1);
   }, []);
 
   const handleRowSelect = (id: number) => {
@@ -49,22 +62,22 @@ const HomeUserForm = () => {
   };
 
   const handleSelectAll = () => {
-    if (selectedIds.length === data.length) {
+    if (selectedIds.length === pagingData.users.length) {
       setSelectedIds([]);
     } else {
-      setSelectedIds(data.map((row) => row.id));
+      setSelectedIds(pagingData.users.map((row) => row.id));
     }
   };
 
   const handleMassDelete = async () => {
     console.log("Deleting rows with IDs:", selectedIds);
-    setData((prev) => prev.filter((row) => !selectedIds.includes(row.id)));
     const pagingUsers = await deleteRequest("/user", {
       ids: selectedIds,
       ...filter,
     });
+    console.log(pagingUsers);
     setSelectedIds([]);
-    setData(pagingUsers.users);
+    setPagingData(pagingUsers);
   };
 
   return (
@@ -80,7 +93,7 @@ const HomeUserForm = () => {
             setFilter((prev) => ({ ...prev, username: e.target.value }))
           }
         />
-        <Button onClick={filterUsers}>Search</Button>
+        <Button onClick={() => filterUsers(1)}>Search</Button>
         <Button variant="destructive" onClick={handleMassDelete}>
           Delete
         </Button>
@@ -98,7 +111,7 @@ const HomeUserForm = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((row) => (
+            {pagingData.users.map((row) => (
               <HomeUserListItem
                 key={row.id}
                 {...row}
@@ -109,6 +122,15 @@ const HomeUserForm = () => {
           </TableBody>
         </Table>
       </div>
+      <PagingContainer
+        pages={pagingData.pages}
+        totalCount={pagingData.totalCount}
+        currentPage={pagingData.currentPage}
+        onSelect={(currentPage: number) => {
+          console.log("clicking on page:", currentPage);
+          filterUsers(currentPage);
+        }}
+      />
     </div>
   );
 };

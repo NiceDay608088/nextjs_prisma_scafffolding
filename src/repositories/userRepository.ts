@@ -60,8 +60,9 @@ export const listUsersRepo = async ({
       where: whereConditions,
     }),
   ]);
+  const pages = Math.ceil(totalCount / RECORD_PER_PAGE);
 
-  return { users, totalCount, currentPage };
+  return { users, totalCount, currentPage, pages };
 };
 
 export const getUserByNameRepo = async (username: string) => {
