@@ -23,6 +23,15 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 | Zod                    |                       |
 |                        |                       |
 
+# Customized Components
+
+| Component            | Version |
+| -------------------- | ------- |
+| Pagination Container |         |
+| Muti Select Combobox |         |
+| Progress Bar         |         |
+| Tags Creator         |         |
+
 # Features
 
 ## Next.js RESTful API

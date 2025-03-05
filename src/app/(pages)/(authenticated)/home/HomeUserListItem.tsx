@@ -7,7 +7,8 @@ interface HomeUserListItemProp {
   username: string;
   cDate: Date;
   isSelected: boolean;
-  onSelect: () => void;
+  onCheckboxChange: () => void;
+  onClick: () => void;
 }
 
 const HomeUserListItem = ({
@@ -15,12 +16,26 @@ const HomeUserListItem = ({
   username,
   cDate,
   isSelected,
-  onSelect,
+  onCheckboxChange,
+  onClick,
 }: HomeUserListItemProp) => {
   return (
-    <TableRow>
+    <TableRow
+      onClick={(e) => {
+        if (!(e.target instanceof HTMLInputElement)) {
+          onClick();
+        }
+      }}
+    >
       <TableCell>
-        <input type="checkbox" checked={isSelected} onChange={onSelect} />
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={(e) => {
+            e.stopPropagation();
+            onCheckboxChange();
+          }}
+        />
       </TableCell>
       <TableCell>{id}</TableCell>
       <TableCell>{username}</TableCell>

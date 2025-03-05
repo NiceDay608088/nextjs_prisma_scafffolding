@@ -55,10 +55,15 @@ const HomeUserForm = () => {
     filterUsers(1);
   }, []);
 
-  const handleRowSelect = (id: number) => {
+  const handleCheckboxChange = (id: number) => {
+    console.log("handleRowChange", id);
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
     );
+  };
+
+  const handleRowClick = (id: number) => {
+    console.log("handleRowClick", id);
   };
 
   const handleSelectAll = () => {
@@ -116,7 +121,8 @@ const HomeUserForm = () => {
                 key={row.id}
                 {...row}
                 isSelected={selectedIds.includes(row.id)}
-                onSelect={() => handleRowSelect(row.id)}
+                onCheckboxChange={() => handleCheckboxChange(row.id)}
+                onClick={() => handleRowClick(row.id)}
               />
             ))}
           </TableBody>
