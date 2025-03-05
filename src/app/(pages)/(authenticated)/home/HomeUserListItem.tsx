@@ -31,10 +31,7 @@ const HomeUserListItem = ({
         <input
           type="checkbox"
           checked={isSelected}
-          onChange={(e) => {
-            e.stopPropagation();
-            onCheckboxChange();
-          }}
+          onChange={onCheckboxChange}
         />
       </TableCell>
       <TableCell>{id}</TableCell>
