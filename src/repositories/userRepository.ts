@@ -11,6 +11,7 @@ export const editUserRepo = async (request: UserUpdateRequest) => {
   const updatedUser = await prisma.user.update({
     where: {
       id: Number(request.id),
+      isDeleted: false,
     },
     data: {
       username: request.username,

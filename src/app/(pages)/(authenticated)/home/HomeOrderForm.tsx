@@ -6,6 +6,7 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import { Menu } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useProgressBar } from "@/components/ProgressBar";
 
 interface HomeOrderFilterType {
   name: string;
@@ -21,6 +22,7 @@ const categories = [
 ];
 
 const OrderForm = () => {
+  const { startProgress, stopProgress } = useProgressBar();
   const [filter, setFilter] = useState<HomeOrderFilterType>({
     name: "",
     category: [],
@@ -109,6 +111,8 @@ const OrderForm = () => {
         </div>
       </div>
       <div>a</div>
+      <button onClick={startProgress}> startProgress</button>
+      <button onClick={stopProgress}> stopProgress</button>
     </div>
   );
 };

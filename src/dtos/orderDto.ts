@@ -16,6 +16,10 @@ export interface OrderUpdateRequest {
   metadata?: {};
 }
 
+export interface OrderDeleteRequest {
+  ids: number[];
+}
+
 export interface OrderFilterRequest {
   name: string;
   minAmount?: number;
