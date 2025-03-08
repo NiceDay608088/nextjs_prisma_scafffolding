@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { ErrorMessage, HookErrorMessage } from "@/components/ErrorMessage";
 import { postRequest } from "@/utils/request-util";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/stores/userSlice";
 
 const loginsSchema = z.object({
   username: z.string().nonempty("Username is required."),
@@ -18,6 +20,7 @@ const loginsSchema = z.object({
 type LoginFormType = z.infer<typeof loginsSchema>;
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [error, setError] = useState("");
   const {
@@ -34,10 +37,15 @@ const LoginForm = () => {
 
   async function onSubmit(values: LoginFormType) {
     try {
-      await postRequest("/user/login", { ...values });
+      const userId = await postRequest("/user/login", { ...values });
+      dispatch(
+        setUserInfo({
+          userId,
+          username: values.username,
+        })
+      );
       router.push("/home");
     } catch (err: any) {
-      // console.log(".....", err);
       setError(err.message);
     }
   }

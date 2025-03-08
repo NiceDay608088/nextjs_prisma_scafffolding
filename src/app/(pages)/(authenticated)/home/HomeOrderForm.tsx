@@ -7,6 +7,7 @@ import { Menu } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useProgressBar } from "@/components/ProgressBar";
+import { useSelector } from "react-redux";
 
 interface HomeOrderFilterType {
   name: string;
@@ -22,6 +23,7 @@ const categories = [
 ];
 
 const OrderForm = () => {
+  const { username } = useSelector((state: any) => state.user);
   const { startProgress, stopProgress } = useProgressBar();
   const [filter, setFilter] = useState<HomeOrderFilterType>({
     name: "",
@@ -60,7 +62,7 @@ const OrderForm = () => {
       <div className="flex flex-col gap-4">
         <div className="flex items-center">
           <div className="w-32 text-right pr-6">User:</div>
-          <div className="flex-1">{"a"}</div>
+          <div className="flex-1">{username}</div>
         </div>
         <div className="flex items-center">
           <div className="w-32 text-right pr-6">Order Name:</div>

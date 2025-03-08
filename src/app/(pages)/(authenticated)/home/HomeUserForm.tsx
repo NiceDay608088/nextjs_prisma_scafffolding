@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import HomeUserListItem from "./HomeUserListItem";
 import { deleteRequest, getRequest } from "@/utils/request-util";
 import PagingContainer from "@/components/PagingContainer";
+import { useProgressBar } from "@/components/ProgressBar";
 
 interface HomeUserFilterType {
   username: string;
@@ -34,6 +35,7 @@ interface HomeUserPagingDataType {
 }
 
 const HomeUserForm = () => {
+  const { startProgress, stopProgress } = useProgressBar();
   const [filter, setFilter] = useState<HomeUserFilterType>({
     username: "",
     currentPage: 1,
@@ -47,8 +49,10 @@ const HomeUserForm = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const filterUsers = async (currentPage: number) => {
+    startProgress();
     const pagingUsers = await getRequest("/user", { ...filter, currentPage });
     setPagingData(pagingUsers);
+    stopProgress();
   };
 
   useEffect(() => {
@@ -133,7 +137,6 @@ const HomeUserForm = () => {
         totalCount={pagingData.totalCount}
         currentPage={pagingData.currentPage}
         onSelect={(currentPage: number) => {
-          console.log("clicking on page:", currentPage);
           filterUsers(currentPage);
         }}
       />

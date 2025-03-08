@@ -40,12 +40,10 @@ const ProgressBarProvider = ({ children }: { children: ReactNode }) => {
 
   const startProgress = () => {
     setIsProgressing(true);
-    console.log("Progress started!");
   };
 
   const stopProgress = () => {
     setIsProgressing(false);
-    console.log("Progress stopped!");
   };
 
   return (
@@ -70,20 +68,22 @@ const ProgressBar = () => {
   const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
+    if (!isProgressing && percentage == 0) return;
+
     const intervalId = setInterval(() => {
       setPercentage((prev) => {
         if (isProgressing && prev > 90) {
           return prev;
         }
 
-        if (!isProgressing && prev >= 115) {
+        if (!isProgressing && prev >= 105) {
           clearInterval(intervalId!);
           setPercentage(0);
         }
 
         return prev + 1;
       });
-    }, 7);
+    }, 1);
 
     return () => {
       if (intervalId) clearInterval(intervalId);
