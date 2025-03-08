@@ -14,6 +14,7 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 | Next.js middleware     |                       |
 | Prisma                 |                       |
 | React                  | 19                    |
+| react-day-picker       |                       |
 | React-hook-form        |                       |
 | RTK (Redux Toolkit)    |                       |
 | Shadcn                 | shadcn@2.4.0-canary.6 |

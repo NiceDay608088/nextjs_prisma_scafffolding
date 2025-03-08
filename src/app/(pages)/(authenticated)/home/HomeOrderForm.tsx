@@ -2,41 +2,54 @@
 
 import React, { useEffect, useState } from "react";
 import apolloClient from "@/lib/apolloClient";
-import { MultiSelect } from "@/components/ui/multi-select";
 import { Menu } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useProgressBar } from "@/components/ProgressBar";
 import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import HomeOrderFormFilter from "./HomeOrderFormFilter";
+import HomeOrderFormButtonRow from "./HomeOrderFormButtonRow";
 
-interface HomeOrderFilterType {
-  name: string;
-  category: string[];
+export interface HomeOrderFilterType {
+  orderName: string;
+  categories: string[];
   labels: string[];
-  maxAmount: number;
-  minAmount: number;
+  cDateFrom: Date | undefined;
+  cDateTo: Date | undefined;
+  maxAmount: number | null;
+  minAmount: number | null;
 }
-
-const categories = [
-  { value: "phone", label: "Phone" },
-  { value: "car", label: "Car" },
-];
+const initFilter = {
+  orderName: "",
+  categories: [],
+  labels: [],
+  cDateFrom: undefined,
+  cDateTo: undefined,
+  maxAmount: null,
+  minAmount: null,
+};
 
 const OrderForm = () => {
-  const { username } = useSelector((state: any) => state.user);
+  const { username, userId } = useSelector((state: RootState) => state.user);
   const { startProgress, stopProgress } = useProgressBar();
-  const [filter, setFilter] = useState<HomeOrderFilterType>({
-    name: "",
-    category: [],
-    labels: [],
-    maxAmount: -1,
-    minAmount: -1,
-  });
+  const [filter, setFilter] = useState<HomeOrderFilterType>(initFilter);
 
   useEffect(() => {
-    console.log(filter);
+    clearSearch();
+  }, [userId]);
+
+  useEffect(() => {
+    console.log({ userId, filter });
   }, [filter]);
 
+  const createOrder = () => {};
+
+  const deleteOrder = () => {};
+
+  const searchOrder = () => {};
+
+  const clearSearch = () => {
+    setFilter(initFilter);
+  };
   // const { confirmPassword, ...mutationVariables } = values;
   // console.log(mutationVariables);
   // try {
@@ -59,62 +72,18 @@ const OrderForm = () => {
       <div className="flex items-center gap-2 text-slate-700">
         <Menu size={20} /> <span className="text-lg">Orders</span>
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center">
-          <div className="w-32 text-right pr-6">User:</div>
-          <div className="flex-1">{username}</div>
-        </div>
-        <div className="flex items-center">
-          <div className="w-32 text-right pr-6">Order Name:</div>
-          <div className="flex-1">
-            <Input
-              value={filter.name}
-              onChange={(e) =>
-                setFilter((prev) => ({ ...prev, name: e.target.value }))
-              }
-            />
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="w-32 text-right pr-6">Categories:</div>
-          <div className="flex-1">
-            <MultiSelect
-              options={categories}
-              onValueChange={(e) =>
-                setFilter((prev) => ({ ...prev, category: e }))
-              }
-              defaultValue={filter.category}
-              placeholder="Select Category"
-              variant="inverted"
-              animation={2}
-              maxCount={3}
-            />
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="w-32 text-right pr-6">Amount:</div>
-          <div className="flex-1">
-            <div className="flex items-center">
-              <div className="flex-1">
-                <Input placeholder="min" />
-              </div>
-              <div className="w-10 text-center"> - </div>
-              <div className="flex-1">
-                <Input placeholder="max" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="w-32 text-right pr-6">Labels:</div>
-          <div className="flex-1">
-            <div className="flex items-center"></div>
-          </div>
-        </div>
-      </div>
-      <div>a</div>
-      <button onClick={startProgress}> startProgress</button>
-      <button onClick={stopProgress}> stopProgress</button>
+      <HomeOrderFormFilter
+        filter={filter}
+        setFilter={setFilter}
+        username={username}
+      />
+      <HomeOrderFormButtonRow
+        userId={userId}
+        createOrder={createOrder}
+        deleteOrder={deleteOrder}
+        searchOrder={searchOrder}
+        clearSearch={clearSearch}
+      />
     </div>
   );
 };

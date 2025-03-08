@@ -15,6 +15,8 @@ import HomeUserListItem from "./HomeUserListItem";
 import { deleteRequest, getRequest } from "@/utils/request-util";
 import PagingContainer from "@/components/PagingContainer";
 import { useProgressBar } from "@/components/ProgressBar";
+import { setUserInfo } from "@/stores/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 interface HomeUserFilterType {
   username: string;
@@ -35,6 +37,7 @@ interface HomeUserPagingDataType {
 }
 
 const HomeUserForm = () => {
+  const dispatch = useDispatch();
   const { startProgress, stopProgress } = useProgressBar();
   const [filter, setFilter] = useState<HomeUserFilterType>({
     username: "",
@@ -66,8 +69,14 @@ const HomeUserForm = () => {
     );
   };
 
-  const handleRowClick = (id: number) => {
-    console.log("handleRowClick", id);
+  const handleRowClick = (userId: number, username: string) => {
+    dispatch(
+      setUserInfo({
+        userId,
+        username,
+      })
+    );
+    console.log("handleRowClick", userId);
   };
 
   const handleSelectAll = () => {
@@ -126,7 +135,7 @@ const HomeUserForm = () => {
                 {...row}
                 isSelected={selectedIds.includes(row.id)}
                 onCheckboxChange={() => handleCheckboxChange(row.id)}
-                onClick={() => handleRowClick(row.id)}
+                onClick={() => handleRowClick(row.id, row.username)}
               />
             ))}
           </TableBody>
