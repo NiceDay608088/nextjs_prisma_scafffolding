@@ -26,12 +26,13 @@ The project's structure is primarily built using Next.js and Prisma. It serves a
 
 # Customized Components
 
-| Component            | Version |
-| -------------------- | ------- |
-| Pagination Container |         |
-| Muti Select Combobox |         |
-| Progress Bar         |         |
-| Tags Creator         |         |
+| Component            | Description                         |
+| -------------------- | ----------------------------------- |
+| Pagination Container |                                     |
+| Muti Select Combobox |                                     |
+| Progress Bar         |                                     |
+| SideMenu             | Show/hide side menu with annimation |
+| Tags Creator         |                                     |
 
 # Features
 
