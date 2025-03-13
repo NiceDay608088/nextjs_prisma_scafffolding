@@ -12,17 +12,13 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
+import { CATEGORIES_OPTIONS } from "@/utils/constants";
 
 interface HomeOrderFormFilterType {
   filter: HomeOrderFilterType;
   setFilter: React.Dispatch<React.SetStateAction<HomeOrderFilterType>>;
   username: string | null;
 }
-
-const categories = [
-  { value: "phone", label: "Phone" },
-  { value: "car", label: "Car" },
-];
 
 const HomeOrderFormFilter = ({
   filter,
@@ -62,7 +58,7 @@ const HomeOrderFormFilter = ({
         <div className="flex-1">
           <MultiSelect
             disabled={!username}
-            options={categories}
+            options={CATEGORIES_OPTIONS}
             onValueChange={(e) =>
               setFilter((prev: HomeOrderFilterType) => ({
                 ...prev,

@@ -9,7 +9,6 @@ import { RootState } from "@/stores/store";
 import HomeOrderFormFilter from "./HomeOrderFormFilter";
 import HomeOrderFormButtonRow from "./HomeOrderFormButtonRow";
 import HomeOrderFormCreateSideMenu from "./HomeOrderFormCreateSideMenu";
-import { z } from "zod";
 
 export interface HomeOrderFilterType {
   orderName: string;
@@ -20,16 +19,6 @@ export interface HomeOrderFilterType {
   maxAmount: number | null;
   minAmount: number | null;
 }
-
-const createOrderSchema = z.object({
-  userId: z.number(),
-  name: z.string().nonempty("Username is required."),
-  categories: z.array(z.string()).optional(),
-  amount: z.number().min(0.1),
-  labels: z.array(z.object({})).optional(),
-});
-
-type createOrderFormType = z.infer<typeof createOrderSchema>;
 
 const initFilter = {
   orderName: "",
